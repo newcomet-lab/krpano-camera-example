@@ -1,0 +1,248 @@
+<?xml version="1.0"?>
+<krpano>
+  <action name="setlimitsvar" keep="true" autorun="onstart">
+		copy(vv, global.view);
+	</action>
+  <style name="infospot" keep="true" type="text" html="+" css="font-size:30px;text-align:center;" vcenter="true" width="70" height="70" scale="0.000001" bgroundedge="36" bgborder="2 0x000000 1" bgshadow="0 0 5 0xFFFFFF 1.0" oversampling="2" mipmapping="true" depth="0" depthbuffer="true" zorder="2" zoom="true" torigin="world" autoalpha="true" alpha="0.0" onloaded.addevent="delayedcall(1,tween(alpha,0.5));" onover.addevent="tween(scale,0.12,0.2,easeoutback); tween(alpha,0.7);" onout.addevent="if(enabled, tween(scale,0.12,0.12); tween(alpha,0.5); )" onclick.addevent="dollhouse_off();"/>
+  <!-- Setup de estilo de nuestros hotspots, eventos útiles -->
+  <style name="basichotspot" keep="true" scale="" bgroundedge="75" bgborder="2 0x000000 1" bgshadow="0 0 5 0xFFFFFF 1.0" mipmapping="true" depth="1" depthbuffer="true" zorder="2" zoom="true" torigin="world" autoalpha="true" alpha="1" onloaded.addevent="delayedcall(1,tween(alpha,0.8));" onover.addevent="tween(scale,0.12,0.2,easeoutback); tween(alpha,1);" onout.addevent="if(enabled, tween(scale,0.12,0.12); tween(alpha,0.8); )" onclick.addevent="setclickvarfalse();"/>
+  <!-- Setup de estilo de nuestros hotspots, eventos útiles -->
+  <style name="arrow" keep="true" scale="" bgroundedge="75" bgborder="2 0x000000 1" bgshadow="0 0 5 0xFFFFFF 1.0" mipmapping="true" depth="1" depthbuffer="true" zorder="2" zoom="true" torigin="world" autoalpha="true" alpha="0.6" onloaded.addevent="delayedcall(1,tween(alpha,0.6));" onover.addevent="tween(scale,0.025,0.2,easeoutback); tween(alpha,0.6);" onout.addevent="if(enabled, tween(scale,0.015,0.12); tween(alpha,0.6); )" onclick.addevent="
+  	setclickvarfalse(); 
+  	delayedcall(4, setclickvartrue(););"/>
+  <!-- Setup de estilo de nuestros hotspots, eventos útiles -->
+  <style name="plus" keep="true" scale="" bgroundedge="75" bgborder="2 0x000000 1" bgshadow="0 0 5 0xFFFFFF 1.0" mipmapping="true" depth="1" depthbuffer="true" zorder="2" zoom="true" torigin="world" autoalpha="true" alpha="0.6" onloaded.addevent="delayedcall(1,tween(alpha,0.6));" onover.addevent="tween(scale,0.012,0.2,easeoutback); tween(alpha,0.6);" onout.addevent="if(enabled, tween(scale,0.01,0.12); tween(alpha,0.6); )" onclick.addevent="
+  	setclickvarfalse();
+  	delayedcall(3, setclickvartrue(););"/>
+
+  <!-- HOTSPOT
+				DERECHA 
+				DERECHA
+				DERECHA
+	-->
+
+  <!-- Setup individual de cada hotspot, te lleva a su posición y tomamos el estilo correspondiente. Según dispositivo abrimos un popup imagen-->
+  
+  <!-- HOTSPOT GO1 
+  <hotspot name="GOLEF" url="link.png" style="arrow" tx="-145" ty="-25" tz="670" scale="0.015" alpha="0" onclick="   tween(vv.tx, -145, 4);   tween(vv.tz, 670, 4);   ">
+		</hotspot>
+  <hotspot name="GOLE2" url="link.png" style="arrow" tx="-145" ty="-25" tz="1000" scale="0.015" alpha="0" onclick="   tween(vv.tx, -145, 4);   tween(vv.tz, 1000, 4);   ">
+		</hotspot>
+  <hotspot name="GOCEN" url="link.png" style="arrow" tx="0" ty="-25" tz="570" scale="0.015" alpha="0" onclick="   tween(vv.tx, 0, 4);   tween(vv.tz, 570, 4);   ">
+		</hotspot>
+  <hotspot name="GORIG" url="link.png" style="arrow" tx="145" ty="-25" tz="670" scale="0.015" alpha="0" onclick="   tween(vv.tx, 145, 4);   tween(vv.tz, 670, 4);   ">
+		</hotspot>
+  <hotspot name="GORI2" url="link.png" style="arrow" tx="145" ty="-25" tz="1000" scale="0.015" alpha="0" onclick="   tween(vv.tx, 145, 4);   tween(vv.tz, 1000, 4);   ">
+		</hotspot>
+		-->
+
+  <!-- FICHAS 
+  <hotspot name="FACE1" url="plus.png" style="plus" tx="-302" ty="-105" tz="750" scale="0.01" onclick="   adjusthlookat(-90);   tween(vv.hlookat, -90, 3);   tween(vv.vlookat, 53, 3);   tween(vv.tx, -228.4, 3);   tween(vv.tz, 743.5, 3);   tween(vv.fov, 67, 3); js(beautyAnimationNavigateTo('FACE1'));">
+		</hotspot>
+  <hotspot name="TOOLS1" url="plus.png" style="plus" tx="-302" ty="-105" tz="835" scale="0.01" onclick="   adjusthlookat(-90);   tween(vv.hlookat, -90, 3);   tween(vv.vlookat, 49.5, 3);   tween(vv.tx, -229, 3);   tween(vv.tz, 835, 3);   tween(vv.fov, 34, 3); js(beautyAnimationNavigateTo('TOOLS1'));">
+		</hotspot>
+  <hotspot name="EYES1" url="plus.png" style="plus" tx="-302" ty="-105" tz="910" scale="0.01" onclick="      adjusthlookat(-90);   tween(vv.hlookat, -90, 3);   tween(vv.vlookat, 49, 3);   tween(vv.tx, -218, 3);   tween(vv.tz, 910, 3);   tween(vv.fov, 62, 3); js(beautyAnimationNavigateTo('EYES1'));">
+		</hotspot>
+  <hotspot name="EYES2" url="plus.png" style="plus" tx="-295" ty="-105" tz="1075" scale="0.01" onclick="   adjusthlookat(-80);   tween(vv.hlookat, -80, 3);   tween(vv.vlookat, 54.7, 3);   tween(vv.tx, -226, 3);   tween(vv.tz, 1065, 3);   tween(vv.fov, 62, 3); js(beautyAnimationNavigateTo('EYES2'));">
+		</hotspot>
+  <hotspot name="NAILS1" url="plus.png" style="plus" tx="-230" ty="-105" tz="1215" scale="0.01" onclick="   adjusthlookat(-54);   tween(vv.hlookat, -54, 3);   tween(vv.vlookat, 41, 3);   tween(vv.tx, -151, 3);   tween(vv.tz, 1154, 3);   tween(vv.fov, 62, 3); js(beautyAnimationNavigateTo('NAILS1'));">
+		</hotspot>
+  <hotspot name="NAILS2" url="plus.png" style="plus" tx="230" ty="-105" tz="1215" scale="0.01" onclick="   adjusthlookat(52.7);   tween(vv.hlookat, 52.7, 3);   tween(vv.vlookat, 31, 3);   tween(vv.tx, 157, 3);   tween(vv.tz, 1142, 3);   tween(vv.fov, 62, 3); js(beautyAnimationNavigateTo('NAILS2'));">
+		</hotspot>
+
+		-->
+
+  <!-- EYES3 a EYES8 duotone
+  <hotspot name="EYES3" url="plus.png" style="plus" tx="295" ty="-105" tz="1075" scale="0.01" onclick="   adjusthlookat(79.5);   tween(vv.hlookat, 79.5, 3);   tween(vv.vlookat, 44, 3);   tween(vv.tx, 225, 3);   tween(vv.tz, 1065, 3);   tween(vv.fov, 62, 3); js(beautyAnimationNavigateTo('EYES3'));">
+		</hotspot>
+	-->
+  <!-- EYES4 a EYES6 
+  <hotspot name="EYES4" url="plus.png" style="plus" tx="302" ty="-105" tz="920" scale="0.01" onclick="   adjusthlookat(91);   tween(vv.hlookat, 91, 3);   tween(vv.vlookat, 46, 3);   tween(vv.tx, 228, 3);   tween(vv.tz, 920, 3);   tween(vv.fov, 62, 3); js(beautyAnimationNavigateTo('EYES4'));">
+		</hotspot>
+		-->
+  <!-- LIPS7 new
+  <hotspot name="LIPS6" url="plus.png" style="plus" tx="302" ty="-105" tz="990" scale="0.01" onclick="   adjusthlookat(90);   tween(vv.hlookat, 90, 3);   tween(vv.vlookat, 46, 3);   tween(vv.tx, 228, 3);   tween(vv.tz, 990, 3);   tween(vv.fov, 48, 3); js(beautyAnimationNavigateTo('LIPS6'));">
+		</hotspot>
+  <hotspot name="TOOLS2" url="plus.png" style="plus" tx="302" ty="-105" tz="835" scale="0.01" onclick="   adjusthlookat(91);   tween(vv.hlookat, 91, 3);   tween(vv.vlookat, 46, 3);   tween(vv.tx, 227, 3);   tween(vv.tz, 837, 3);   tween(vv.fov, 90, 3); js(beautyAnimationNavigateTo('TOOLS2'));">
+  		</hotspot>
+  -->
+  <!--FACE2 a EYES5 
+  <hotspot name="EYES5" url="plus.png" style="plus" tx="302" ty="-105" tz="750" scale="0.01" onclick="   adjusthlookat(91);   tween(vv.hlookat, 91, 3);   tween(vv.vlookat, 45.8, 3);   tween(vv.tx, 250, 3);   tween(vv.tz, 750, 3);   tween(vv.fov, 48, 3); js(beautyAnimationNavigateTo('EYES5'));">
+		</hotspot>
+	-->
+  <!--MESA CENTRAL 
+  <hotspot name="LIPS1" url="plus.png" style="plus" tx="40" ty="-90" tz="730" scale="0.01" onclick="   adjusthlookat(-69);   tween(vv.hlookat, -69, 3);   tween(vv.vlookat, 40, 3);   tween(vv.tx, 135, 3);   tween(vv.tz, 698, 3);   tween(vv.fov, 20, 3); js(beautyAnimationNavigateTo('LIPS1'));">
+		</hotspot>
+  <hotspot name="LIPS2" url="plus.png" style="plus" tx="0" ty="-90" tz="715" scale="0.01" onclick="   adjusthlookat(0);   tween(vv.hlookat, 0, 3);   tween(vv.vlookat, 27.5, 3);   tween(vv.tx, 0, 3);   tween(vv.tz, 550, 3);   tween(vv.fov, 20, 3); js(beautyAnimationNavigateTo('LIPS2'));">
+		</hotspot>
+  <hotspot name="LIPS3" url="plus.png" style="plus" tx="-40" ty="-90" tz="730" scale="0.01" onclick="   adjusthlookat(69);   tween(vv.hlookat, 69, 3);   tween(vv.vlookat, 40, 3);   tween(vv.tx, -135, 3);   tween(vv.tz, 698, 3);   tween(vv.fov, 20, 3); js(beautyAnimationNavigateTo('LIPS3'));">
+		</hotspot>
+  <hotspot name="TMP1" url="plus.png" style="plus" tx="-41" ty="-90" tz="790" scale="0.01" onclick="   adjusthlookat(90);   tween(vv.hlookat, 90, 3);   tween(vv.vlookat, 40, 3);   tween(vv.tx, -140, 3);   tween(vv.tz, 790, 3);   tween(vv.fov, 65, 3); js(beautyAnimationNavigateTo('TMP1'));">
+		</hotspot>
+	-->
+  <!--nails3 a lips4
+  <hotspot name="LIPS4" url="plus.png" style="plus" tx="-17" ty="-90" tz="1038" scale="0.01" onclick="   adjusthlookat(160);   tween(vv.hlookat, 160, 3);   tween(vv.vlookat, 40, 3);   tween(vv.tx, -60, 3);   tween(vv.tz, 1125, 3);   tween(vv.fov, 48, 3); js(beautyAnimationNavigateTo('LIPS4'));">
+		</hotspot>
+	-->
+  <!--lips5 new
+  <hotspot name="LIPS5" url="plus.png" style="plus" tx="35" ty="-90" tz="1028" scale="0.01" onclick="   adjusthlookat(235);   tween(vv.hlookat, 235, 3);   tween(vv.vlookat, 40, 3);   tween(vv.tx, 130, 3);   tween(vv.tz, 1090, 3);   tween(vv.fov, 48, 3); js(beautyAnimationNavigateTo('LIPS5'));">
+		</hotspot>
+  <hotspot name="TMP2" url="plus.png" style="plus" tx="41" ty="-90" tz="975" scale="0.01" onclick="   adjusthlookat(-90);   tween(vv.hlookat, -90, 3);   tween(vv.vlookat, 61, 3);   tween(vv.tx, 95, 3);   tween(vv.tz, 973, 3);   tween(vv.fov, 65, 3); js(beautyAnimationNavigateTo('TMP2'));">
+		</hotspot>
+  <hotspot name="EYES6" url="plus.png" style="plus" tx="-41" ty="-90" tz="875" scale="0.01" onclick="   adjusthlookat(90);   tween(vv.hlookat, 90, 3);   tween(vv.vlookat, 61, 3);   tween(vv.tx, -95, 3);   tween(vv.tz, 882, 3);   tween(vv.fov, 65, 3); js(beautyAnimationNavigateTo('EYES6'));">
+		</hotspot>
+  <hotspot name="TOOLS3" url="plus.png" style="plus" tx="-41" ty="-90" tz="975" scale="0.01" onclick="   adjusthlookat(90);   tween(vv.hlookat, 90, 3);   tween(vv.vlookat, 61, 3);   tween(vv.tx, -95, 3);   tween(vv.tz, 973, 3);   tween(vv.fov, 65, 3); js(beautyAnimationNavigateTo('TOOLS3'));">
+		</hotspot>
+  <hotspot name="EYES7" url="plus.png" style="plus" tx="41" ty="-90" tz="875" scale="0.01" onclick="   adjusthlookat(-90);   tween(vv.hlookat, -90, 3);   tween(vv.vlookat, 61, 3);   tween(vv.tx, 95, 3);   tween(vv.tz, 882, 3);   tween(vv.fov, 65, 3); js(beautyAnimationNavigateTo('EYES7'));">
+		</hotspot>
+  <hotspot name="TOOLS4" url="plus.png" style="plus" tx="41" ty="-90" tz="790" scale="0.01" onclick="   adjusthlookat(-90);   tween(vv.hlookat, 90, 3);   tween(vv.vlookat, 40, 3);   tween(vv.tx, 140, 3);   tween(vv.tz, 790, 3);   tween(vv.fov, 65, 3); js(beautyAnimationNavigateTo('TOOLS4'));">
+		</hotspot>
+	-->
+
+
+  <!-- VISIBLE HOTSPOTS de vídeo
+  <hotspot name="video" url="%VIEWER%/plugins/videoplayer.js" videourl="scr_veA.mp4?v2" depthbuffer="true" handcursor="false" preload="true" loop="true" pausedonstart="true" ath="0" atv="0" edge="center" distorted="true" zoom="true" scale="0.11" rx="0" ry="00" rz="0" tx="0.0" ty="-200" tz="380" capture="false" visible="false" muted="true" onclick="looktohotspot(get(name),90); videoplayer_open('%CURRENTXML%/scr_veA.mp4?v2', 0.5);"/>
+  <hotspot name="videoH" url="%VIEWER%/plugins/videoplayer.js" videourl="scr_hoA.mp4?v2" depthbuffer="true" handcursor="false" preload="true" loop="true" pausedonstart="true" ath="0" atv="0" edge="center" distorted="true" zoom="true" scale="0.25" rx="0" ry="180" rz="0" tx="0.0" ty="&#45;180" tz="&#45;1100" capture="false" visible="false" muted="true"/>
+	-->	
+
+ <action name="loadvideos" >
+ 	set(hotspot[video].visible, true);
+ 	hotspot[video].play();
+ 	set(hotspot[videoH].visible, true);
+ 	hotspot[videoH].play();
+ </action>
+
+  <action name="videoplayer_open">
+		if(layer[videoplayer_bg],
+			<!-- error -->
+			trace('videoplayer_open - there is already a videoplayer!'-);
+		  ,
+			<!-- step one - add a background layer and fade it in -->
+			addlayer(videoplayer_bg);
+			set(layer[videoplayer_bg].type, container);
+			set(layer[videoplayer_bg].zorder, 999999);
+			set(layer[videoplayer_bg].safearea, false);
+			set(layer[videoplayer_bg].align, lefttop);
+			set(layer[videoplayer_bg].width, 100%);
+			set(layer[videoplayer_bg].height, 100%);
+			set(layer[videoplayer_bg].bgcolor, 0x000000);
+			set(layer[videoplayer_bg].bgalpha, 0.8);
+			set(layer[videoplayer_bg].bgcapture, true);
+			set(layer[videoplayer_bg].handcursor, false);
+			set(layer[videoplayer_bg].alpha, 0.0);
+			set(layer[videoplayer_bg].onclick, videoplayer_close() );
+			tween(layer[videoplayer_bg].alpha, 1.0, 0.5, default,
+				<!-- step two - after the fade-in add the videoplayer plugin -->
+				addlayer(videoplayer_plugin);
+				set(layer[videoplayer_plugin].parent, layer[videoplayer_bg]);
+				set(layer[videoplayer_plugin].align, center);
+				set(layer[videoplayer_plugin].loop, true);
+				set(layer[videoplayer_plugin].onclick, togglepause() );
+				set(layer[videoplayer_plugin].alpha, 0.0);
+				set(layer[videoplayer_plugin].scale, 0.0);
+				set(layer[videoplayer_plugin].onloaded, videoplayer_plugin_ready(%1) );
+				if('%2' != null, set(layer[videoplayer_plugin].posterurl,'%2'); );
+				if('%3' != null, set(layer[videoplayer_plugin].volume,%3); );
+				if(device.flash,
+					set(layer[videoplayer_plugin].url,'%VIEWER%/plugins/videoplayer.swf');
+				  ,
+					set(layer[videoplayer_plugin].url,'%VIEWER%/plugins/videoplayer.js');
+				  );
+			  );
+		  );
+	</action>
+  <action name="videoplayer_plugin_ready">
+		if(layer[videoplayer_plugin],
+			set(events[videoplayer_events].onresize, videoplayer_plugin_resize() );
+			set(layer[videoplayer_plugin].pausedonstart, true);
+			set(layer[videoplayer_plugin].onvideoready,
+					videoplayer_plugin_resize();
+					tween(scale,1,0.5,easeOutBack);
+					tween(alpha,1,0.5,default, ifnot(device.ios, play() ) );
+			   );
+			layer[videoplayer_plugin].playvideo(%1);
+		  );
+	</action>
+  <action name="videoplayer_plugin_resize"><!-- use 90% width or height of available screen size -->
+		div(aspect, layer[videoplayer_plugin].imagewidth, layer[videoplayer_plugin].imageheight);
+		mul(new_videowidth, stagewidth, 0.90);
+		div(new_videoheight, new_videowidth, aspect);
+		mul(max_videoheight, stageheight, 0.90);
+		if(new_videoheight GT max_videoheight,
+			copy(new_videoheight, max_videoheight);
+			mul(new_videowidth, new_videoheight, aspect);
+		  );
+		roundval(new_videowidth);
+		roundval(new_videoheight);
+		copy(layer[videoplayer_plugin].width, new_videowidth);
+		copy(layer[videoplayer_plugin].height, new_videoheight);
+	</action>
+  <action name="videoplayer_close">
+		set(events.[videoplayer_events].name, null);
+		if(layer[videoplayer_plugin], layer[videoplayer_plugin].pause() );
+		set(layer[videoplayer_bg].onclick, null);
+
+		tween(layer[videoplayer_plugin].scale, 0.0, 0.5, easeInBack);
+		tween(layer[videoplayer_bg].alpha, 0.0, 0.5, default,
+			removelayer(videoplayer_plugin);
+			removelayer(videoplayer_bg);
+			setclickvartrue();
+		  );
+	</action>
+  <!-- Si el hotspot es tipo HTML, aquí configuramos sus características -->
+  <!-- arguments: 1=htmlcode, 2=scrollbars -->
+  <action name="add_html_code" type="Javascript"><![CDATA[
+		var div = document.createElement("div");
+
+		// basic styles to fit into the layer size and allow scrolling:
+		div.style.width = "100%";
+		div.style.height = "100%";
+		div.style.boxSizing = "border-box";
+		div.style.overflow = args[2] == "true" ? "auto" : "hidden";
+
+		// allow text selection (optional):
+		div.style.webkitUserSelect =
+		div.style.MozUserSelect =
+		div.style.msUserSelect =
+		div.style.userSelect = "text";
+
+		function stopPropagation(e){ e.stopPropagation(); }
+		function preventDefault(e){ e.preventDefault(); }
+
+		// enable browsed-based mouse-wheel and touch-scrolling support:
+		div.addEventListener("wheel", stopPropagation, true);
+		div.addEventListener("mousewheel", stopPropagation, true);
+		div.addEventListener("DOMMouseScroll", stopPropagation, true);
+		div.addEventListener("touchstart", function(event){ if(krpano.device.ios && window.innerHeight == krpano.display.htmltarget.offsetHeight){ /* avoid the iOS 'overscrolling' for fullpage viewers */ var bs = document.body.parentNode.style; bs.position="fixed"; bs.top=0; bs.left=0; bs.right=0; bs.bottom=0; } krpano.control.preventTouchEvents = false; event.stopPropagation(); }, true);
+		div.addEventListener("touchend", function(event){ krpano.control.preventTouchEvents = true; event.stopPropagation(); }, true);
+		div.addEventListener("gesturestart", preventDefault, true);
+
+		// add the html code:
+		div.innerHTML = args[1];
+
+		// add the div to the layer element:
+		caller.sprite.appendChild(div);
+	]]></action>
+  <data name="data_html_example"><![CDATA[
+
+		<div style="padding:10px;">
+
+			<h2>This is a html div inside krpano...</h2>
+			<hr style="border:0;border-top:1px solid white;">
+			<ul>
+				<li>With support for browser-based-scrolling by mouse-wheel, scroll-bars and touch-controls.</li>
+				<li>Fully integrated into krpano as &lt;layer&gt; container element.</li>
+			</ul>
+			Here a normal <a href="https://krpano.com" target="_blank" style="color:#FFFFFF;">link</a> for testing browser events.<br>
+			Here a <span style="text-decoration:underline;cursor:pointer;" onclick="document.getElementById('krpanoSWFObject').call('tween(layer[popup].x,calc(layer[popup].x LT 200 ? 200 : 0));');" style="color:#FFFFFF;">link</span> for testing the krpano JS API.<br>
+			<br>
+			And here some text to scroll:<br>
+			Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.<br>
+			<br>
+			Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.<br>
+			<br>
+
+		</div>
+
+	]]></data>
+</krpano>

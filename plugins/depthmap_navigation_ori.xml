@@ -1,0 +1,376 @@
+﻿<krpano debugmode="true">
+	
+	<!--
+		krpano Depthmap Navigation Controls 
+		- Arrow-keys or WASD-keys navigation on desktop
+		- On-Screen-Touchpad for mobile devices
+		- VR controllers for WebVR usage
+	-->
+
+
+
+
+	<!-- remove the default keyboard controls -->
+	<control keycodesleft="" keycodesright="" keycodesup="" keycodesdown="" />
+
+	<!-- keyboard keycodes -->
+	<keyb up="38" down="40" left="37" right="39" w="87" a="65" s="83" d="68" q="81" y="89" z="90" shift="16" ctrl="17" space="32" pageup="33" pagedown="34" />
+	
+	<!-- state variables for walking around in the depthmap pano -->
+	<walkaround forward="0" backward="0" left="0" right="0" up="0" down="0" faster="0" />
+	
+	<!-- keyboard event handling -->
+	<events name="depthmap_handlekey" keep="true" onkeydown="depthmap_handlekey(1);" onkeyup="depthmap_handlekey(0);" />
+	
+	<action name="depthmap_handlekey" args="keypressed" scope="local">
+		if( keycode == keyb.up    OR keycode == keyb.w, copy(walkaround.forward,  keypressed);
+		  , keycode == keyb.down  OR keycode == keyb.s, copy(walkaround.backward, keypressed);
+		  , keycode == keyb.left  OR keycode == keyb.a, copy(walkaround.left,     keypressed);
+		  , keycode == keyb.right OR keycode == keyb.d, copy(walkaround.right,    keypressed);
+		  , keycode == keyb.shift,                      copy(walkaround.faster,   keypressed);
+		  , keycode == keyb.ctrl,                       copy(walkaround.strafe,   keypressed);
+		  , keycode == keyb.q,                          copy(walkaround.up,       keypressed);
+		  , keycode == keyb.y OR keycode == keyb.z,     copy(walkaround.down,     keypressed);
+		);
+	</action>
+	
+	<!-- walking/flying controls -->
+	<action name="depthmap_walkaroundmovement" autorun="onstart" type="Javascript"><![CDATA[
+		var speed = 0.5;
+		var friction = 0.9;
+		var walkaround = krpano.get("walkaround");
+		var vx=0, vy=0, vz=0;
+		var rx=0;
+		var touchpad_last_axis = [[0,0],[0,0]];
+		var touchpad_move_speed = 5.0;
+		var touchpad_rotate_speed = 1.5;
+		var joystick_move_speed = 1.0;
+		var joystick_rotate_speed = 1.0;
+		
+		// add a global 'depthmap_movemode' variable for setting the control mode: "walking" or "flying"
+		krpano.depthmap_movemode = "walking";
+		
+		krpano.actions.renderloop( function()
+		{
+			vx *= friction;
+			vy *= friction;
+			vz *= friction;
+			rx *= friction;
+			
+			if (vx*vx + vy*vy + vz*vz < 0.001)
+				vx = vy = vz = 0;
+			
+			if (rx*rx < 0.01)
+				rx = 0;
+			
+			var h = krpano.view.hlookat * Math.PI / 180.0;
+			var v = krpano.view.vlookat * Math.PI / 180.0;
+			
+			// 2D direction vector (walking)
+			var lx2 = Math.sin(h);
+			var lz2 = Math.cos(h);
+			
+			// 3D direction vector (flying)
+			var lx3 = krpano.view.dir.x;
+			var ly3 = krpano.view.dir.y;
+			var lz3 = krpano.view.dir.z;
+			
+			var wx = walkaround.right - walkaround.left;
+			var wz = walkaround.forward - walkaround.backward;
+			var wy = walkaround.up - walkaround.down;
+			
+			// handle the touchpad or joystick input from the vr-controllers
+			var vrcontroller = (krpano.webvr && krpano.webvr.enabled) ? krpano.webvr.vrcontroller : null;
+			
+			var wl = Math.sqrt(wx*wx + wz*wz);
+			if (wl > 0)
+			{
+				// normalize the moving speed
+				wl = speed / wl;
+				if (walkaround.faster > 0)
+					wl *= 3;
+					
+				wx *= wl;
+				wz *= wl;
+				if (wx)
+				{
+					vx += wx*lz2;
+					vz -= wx*lx2;
+				}
+				if (wz)
+				{ 
+					if (krpano.depthmap_movemode == "flying")
+					{
+						vx += wz*lx3;
+						vz += wz*lz3; 
+						vy += wz*ly3;
+					}
+					else
+					{
+						vx += wz*lx2;  
+						vz += wz*lz2; 
+					}
+				}
+			}
+			
+			if (wy)
+			{
+				vy -= 0.5*speed*wy;
+			}
+			
+			krpano.view.tx += vx;
+			krpano.view.ty += vy;
+			krpano.view.tz += vz;
+			
+			if (rx != 0)
+			{
+				krpano.webvr.hlookatoffset += rx;
+			}
+		});
+	]]></action>
+	
+	
+	<!-- some buttons -->
+	<!--
+	<style name="depthmap_button" type="text" css="text-align:center;" padding="4 8" mergedalpha="false" bgborder="0 0xFFFFFF 1" bgroundedge="1" bgshadow="0 1 4 0x000000 1.0" ondown="set(bgcolor, 0xDDDDDD);" onup="set(bgcolor, 0xFFFFFF);" />
+	<style name="depthmap_info" type="text" css="color:#FFFFFF;text-align:center;" bg="false" txtshadow="0 1 4 0x000000 1.0" enabled="false" />
+	
+	<layer name="moveup" keep="true" style="depthmap_button" html="▲" align="rightbottom" x="20" y="50" ondown="set(walkaround.up,1);"   onup="set(walkaround.up,0);" />
+	<layer name="movedn" keep="true" style="depthmap_button" html="▼" align="rightbottom" x="20" y="20" ondown="set(walkaround.down,1);" onup="set(walkaround.down,0);" />
+	
+	<layer name="movefd" keep="true" style="depthmap_button" html="Z" align="rightbottom" x="20" y="200" ondown="set(walkaround.forward,1);" onup="set(walkaround.forward,0);" />
+	-->
+
+
+<!--
+	<events name="movefwd" keep="true" onclick="set(walkaround.forward,1);"/>
+
+	<events name="stopmovefwd" keep="true" onclick="delayedcall(1.5, set(walkaround.forward,0));"/> 
+
+adjusthlookat(toh +15); (ARREGLAR ROTACIÓN 360+)	
+
+	<events name="checkhlookat" onclick="screentosphere(mouse.x, mouse.y, toh, tov);
+	adjusthlookat(toh);
+	tween(global.view.hlookat, get(toh), 2);">
+	</events>
+-->
+
+	<action name="setclickvartrue"  keep="true" scope="global" autorun="onstart"  >
+		set(clicktomove, true);
+	</action>
+
+	<action name="setclickvarfalse"  keep="true" scope="global" autorun=""  >
+		set(clicktomove, false);
+	</action>
+
+	<events name="clicktomovee" keep="true" scope="global" onclick="
+	if(clicktomove == true
+		, 
+		showlog();
+		
+		tween(walkaround.forward, 1 ,0.5);
+		delayedcall(0.6, set(walkaround.forward, 0));
+		screentosphere(mouse.x, mouse.y, toh, tov);
+
+		set(cli, toh);
+		set(loo, calc(vv.hlookat/360));
+		Math.abs(loo);
+		Math.floor(loo);		
+
+
+		
+		if(vv.hlookat LT 0 AND toh LT 0
+		,		
+		mul(loo360, 360, get(loo));
+		sub(loocli360, toh, get(loo360));
+		set(clt, get(loocli360));
+		set(dis, calc(vv.hlookat - get(clt)));
+
+		,
+		set(dis, 0);
+		);
+ 
+ 		if(vv.hlookat LT 0 AND toh GT 0
+		,	
+		mul(loo360, 360, get(loo));
+		sub(loocli360, toh, get(loo360));
+		set(clt, get(loocli360));
+		set(dis, calc(vv.hlookat - get(clt)));
+		);
+
+		if(vv.hlookat GT 135 AND toh LT 0
+		,	
+		add(cli360, 360, toh);
+		mul(loo360, 360, get(loo));	
+		add(loocli360, get(cli360), get(loo360));
+		set(clt, get(loocli360));
+		set(dis, calc(get(clt) - vv.hlookat));		
+		);
+
+		if(vv.hlookat LT 0 AND toh GT 135
+		,	
+		sub(cli360, 360, toh);
+		mul(cli360, -1, 360);
+		mul(loo360, 360, get(loo));	
+		sub(loocli360, get(cli360), get(loo360));
+		set(clt, get(loocli360));
+		set(dis, calc(get(clt) - vv.hlookat));	
+		);
+
+		if(vv.hlookat GT 0 AND toh LT 0 AND loo == 0
+		,	
+		set(cli, get(toh));
+		mul(loo360, 360, get(loo));	
+		add(loocli360, get(cli), get(loo360));
+		set(clt, get(loocli360));
+		set(dis, calc(get(clt) - vv.hlookat));
+		);
+
+		if(vv.hlookat LT 0 AND toh GT 0 AND loo GT 0
+		,	
+		set(cli, get(toh));
+		mul(loo360, 360, get(loo));		
+		add(loocli360, get(cli), get(loo360));
+		set(clt, get(loocli360));
+		set(dis, calc(get(clt) - vv.hlookat));
+		);
+
+		if(vv.hlookat LT 0 AND toh GT 0
+		,
+		set(cli, get(toh));
+		mul(loo360, 360, get(loo));		
+		add(loocli360, get(cli), get(loo360));
+		set(clt, get(loocli360));
+		set(dis, calc(get(clt) - vv.hlookat));
+		);
+
+		if(vv.hlookat == 0
+		,
+		set(cli, get(toh));
+		mul(loo360, 360, get(loo));		
+		add(loocli360, get(cli), get(loo360));
+		set(clt, calc(-1 * get(loocli360)));
+		set(dis, calc(get(clt) - vv.hlookat));
+		);
+
+
+
+		set(fov1, calc(get(global.view.fov)/2));
+		set(des, calc(get(dis)/get(fov1)));
+		mul(angleswap, -60, get(des));
+		set(hlf, calc(vv.hlookat + get(angleswap)));
+
+
+		adjusthlookat(get(hlf));
+		tween(vv.hlookat, get(hlf), 0.6);
+
+		trace('HLF= ', get(hlf));
+		trace('CLI= ', get(toh));
+		trace('HLO= ', get(vv.hlookat));
+		trace('LOO= ', get(loo));
+		trace('CLT= ', get(clt));
+		trace('DIS= ', get(dis));	
+		trace('DES= ', get(des));
+	);
+">
+	</events>
+
+<action name="HL0LT0CLIGT35" autorun="">
+
+		if(vv.hlookat LT 0 AND toh GT 135
+		,	
+		sub(cli360, 360, toh);
+		mul(cli360, -1, 360);
+		mul(loo360, 360, get(loo));	
+		sub(loocli360, get(cli360), get(loo360));
+		set(clt, get(loocli360));
+		set(dis, calc(get(clt) - vv.hlookat));	
+		);
+
+</action>
+
+<action name="HL0GT0CLILT0LOO0" autorun="">
+
+		if(vv.hlookat GT 0 AND toh LT 0 AND loo == 0
+		,	
+		set(cli, get(toh));
+		mul(loo360, 360, get(loo));	
+		add(loocli360, get(cli), get(loo360));
+		set(clt, get(loocli360));
+		set(dis, calc(get(clt) - vv.hlookat));
+		);
+
+</action>
+
+<action name="HL0GT0CLILT0LOOGT0" autorun="">
+
+		if(vv.hlookat LT 0 AND toh GT 0 AND loo GT 0
+		,	
+		set(cli, get(toh));
+		mul(loo360, 360, get(loo));		
+		add(loocli360, get(cli), get(loo360));
+		set(clt, get(loocli360));
+		set(dis, calc(get(clt) - vv.hlookat));
+
+		);
+
+</action>
+<!-- OLD CLICK AND ROTATE 
+
+
+
+
+		adjusthlookat(toh);
+
+		if(get(toh) GT vv.hlookat,
+			tween(vv.hlookat, calc(get(toh) +25), 0.6);
+		,
+			tween(vv.hlookat, calc(get(toh) -25), 0.6);
+		);
+		tween(vv.vlookat, get(tov), 0.6);
+		);
+
+-->
+<!--
+		trace('CLI= ', get(toh));
+		trace('HLO= ', get(vv.hlookat));
+		trace('DIS= ', get(dis));
+		set(hlx, calc(vv.hlookat/360));
+
+		set(loo, hlx);
+		Math.abs(get(loo));
+		Math.floor(get(loo));	
+
+-->
+
+
+	<action name="setclickandrotatevariables" autorun="" scope="global">
+		set(cli, 0);
+		set(hlo, 0);
+		set(loo, 0);
+	</action>
+
+	<action name="tracevars" >
+		trace(cli);
+		trace(hlo);
+		trace(loo);
+	</action>
+
+	<events name="clickandrotate" keep="true" onclick="
+
+		">
+
+
+	</events>
+
+	<!-- info texts 
+	lookat(tween(vv.hlookat, get(toh), 1.7), tween(vv.vlookat, get(tov), 1.7));
+			adjusthlookat(toh);
+		tween(global.view.hlookat, get(toh), 1.7);	-->
+	<!--
+	<layer name="depthmap_walkinfo" keep="true" style="depthmap_info" align="center" y="+25%" html="Walk around using the[br]Keyboard Arrow- or W,A,S,D-keys" devices="desktop" />	
+	-->
+
+
+
+</krpano>

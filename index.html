@@ -1,0 +1,102 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <title>Athleticz</title>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, viewport-fit=cover" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+        <meta http-equiv="x-ua-compatible" content="IE=edge" />
+        <style>
+          html {
+            height: 100%;
+          }
+          body {
+            height: 100%;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+          }
+          #pano-menu {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+          }
+        </style>
+    </head>
+    <body>
+        <script src="krpano.js"></script>
+        <div id="pano" style="width: 100%; height: 100%;">
+            <noscript>recuper
+                <table style="width: 100%; height: 100%;">
+                    <tr style="vertical-align: middle; text-align: center;">
+                        <td>
+                            ERROR:<br />
+                            <br />
+                            Javascript not activated<br />
+                            <br />
+                        </td>
+                    </tr>
+                </table>
+            </noscript>
+            <script>
+                var krpano = null;
+                console.log("mostrar splash screen");
+                window.beautyAnimationLoaded = function() {
+                  console.log("ocultar splash screen");
+                  if (!savedSettings) {
+                    beautyKrpano.call("autotour();");
+                  }
+                };
+                window.beautyAnimationNavigateTo = function(product) {
+                    console.log(product);
+                    setTimeout(() => {
+                      var settings = {};
+                      var settingNames = ["hlookat", "vlookat", "fov", "TX", "tz", "ty"];
+                      settingNames.forEach(function(s) {
+                        var settingName = "view." + s;
+                        settings[settingName] = krpano.get(settingName);
+                      });
+                      localStorage.setItem("settings", JSON.stringify(settings));
+                      window.location.href = 'https://www.zara.com/';
+                    }, 3000);
+                }
+                var savedSettings = localStorage.getItem("settings");
+
+// INITIAL VIEW                 
+                var settings = { "view.hlookat": "0", "view.vlookat": "0", "view.fov": "90", "view.TX": "500", "view.tz": "0", "view.ty": "-160" };
+                if (savedSettings) {
+                  settings = JSON.parse(savedSettings);
+                }
+                function krpano_onready_callback(krpano_interface) {
+                    console.log("krpano_onready_callback");
+                    krpano = krpano_interface;
+                    window.beautyKrpano = krpano;
+                }
+                window.embedpano({
+                  swf: `krpano.swf`,
+                  xml: `test.xml`,
+                  target: "pano",
+                  html5: "auto",
+                  mobilescale: 1.0,
+                  consolelog: "true",
+                  passQueryParameters: false,
+                  vars: settings,
+                  onready: krpano_onready_callback,
+                });
+            </script>
+        </div>
+
+    <!--  MENU QUE LANZA A PUNTOS ALEATORIOS DE CADA CATEGORIA
+        <ul id="pano-menu">
+          <li><a href='javascript:beautyKrpano.call("getrandomvalueLIPS(); setclickvartrue();")'>LIPS</a></li>
+          <li><a href='javascript:beautyKrpano.call("getrandomvalueEYES(); setclickvartrue();")'>EYES</a></li>
+          <li><a href='javascript:beautyKrpano.call("getrandomvalueFACE(); setclickvartrue();")'>FACE</a></li>
+          <li><a href='javascript:beautyKrpano.call("getrandomvalueNAILS(); setclickvartrue();")'>NAILS</a></li>
+          <li><a href='javascript:beautyKrpano.call("getrandomvalueTOOLS(); setclickvartrue();")'>TOOLS</a></li>
+          <li><a href='javascript:beautyKrpano.call("resetview(); setclickvartrue();")'>HOME</a></li>
+        </ul>
+     -->   
+    </body>
+</html>

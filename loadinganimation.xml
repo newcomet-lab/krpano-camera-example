@@ -1,0 +1,16 @@
+﻿<?xml version="1.0"?>
+<!--
+	loading animation with an image-strip / sprite-sheet
+	- made as 'flying' hotspots
+	- works also in VR mode
+	- just include once this xml
+-->
+<krpano>
+  <!-- loading animation events -->
+  <events name="loadinganimation" keep="true" onloadcomplete="delayedcall(0.25, loadinganimation_stoploading() );"/>
+  <!-- loading animation graphic -->
+  <action name="loadinganimation_stoploading">
+		js(beautyAnimationLoaded());
+		js(console.log('loadinganimation_stoploading'));
+	</action>
+</krpano>

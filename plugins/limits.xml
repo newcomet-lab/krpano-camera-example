@@ -1,0 +1,8 @@
+<krpano>
+<!-- LIMIT VIEW -->
+	<events onviewchange="
+		clamp(view.tx,0,+10000);
+		clamp(view.tz,0,+10000);
+		clamp(view.fov, 2, 90);"
+		/>
+</krpano>

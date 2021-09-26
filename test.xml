@@ -1,0 +1,661 @@
+<?xml version="1.0"?>
+<krpano idletime="60" bgcolor="#000000" debugmode="false" >
+  <!-- LOADINGANIMATION Cargamos el evento de carga en javascript en krpano.html(inservible?) -->	
+  <include url="%VIEWER%/loadinganimation.xml"/>
+  <!-- CONTEXTMENU Cargamos el estilo y funcionalidad del menú al pulsar click derecho(deshabilitado) -->
+  <include url="%VIEWER%/plugins/contextmenu.xml"/>
+  <!-- COMBOBOX Cargamos el estilo del menú desplegable de hamburguesa -->
+  <include url="%VIEWER%/plugins/combobox.xml"/>
+  <!-- DEPTHMAP_NAVIGATION Cargamos la navegación general del proyecto -->
+  <include url="%VIEWER%/plugins/depthmap_navigation.xml"/>
+  <!-- IPHONE_FULLSCREEN_SWIPE Plugin necesario para funcionalidad de fullscreen y swipe de Iphone -->
+  <include url="%VIEWER%/plugins/iphone_fullscreen_swipe.xml"/>
+  <!-- LIMITS aqui evitamos que atraviese paredes y ponemos limites en X Y Z y en FOV o campo de vision de camara -->
+  <include url="%VIEWER%/plugins/limits.xml"/>
+  <!-- SHOWTEXT Cargamos la capacidad de mostrar texto en pantalla -->
+  <include url="%VIEWER%/plugins/showtext.xml"/>
+  <!-- IOS_IFRAME_FULLSCREEN Nos permite cargar iframes en fullscreen en IOS -->
+  <include url="%VIEWER%/plugins/ios_iframe_fullscreen.xml"/>
+  <!-- POINTS Cargamos todos los estilos y funcionalidades de los hotspots en la escena, posibilidad de añadir iframes  -->
+  <include url="points.xml"/>
+  <display depthbuffer="true"/>
+  <plugin url="%VIEWER%/plugins/soundinterface.js" keep="true" onloaded="playsound(bg, '%CURRENTXML%/aud/ut8.mp3', true, 0.5);"/>
+  <control invert="false"/>
+
+<!--  MENU de arriba -->
+<combobox name="viewsettings" design="vtour" align="lefttop" x="10" y="10" onchange="selectItemByName(0);"  >
+
+		<item name="item0" caption="≡"  />
+
+		<item name="item1" caption="Home"    
+		 onclick="
+			resetview();
+			setcirclevarfalse();
+			setclickvartrue();" />
+
+		<item name="item2" caption="Circle"    
+		 onclick="
+			setcirclevartrue();
+			setclickvarfalse();" />
+
+		<item name="item3" caption="Aerial View"      
+		onclick="
+			dollhouse_view();
+			setcirclevarfalse();
+			setclickvarfalse();
+			" />
+		<item name="item4" caption="Eye View" 
+		onclick="
+			resetview();
+			setclickvartrue();
+			" />			
+
+<!--  ITEMS DESACTIVADOS
+
+	<item name="item2" caption="Lips" 
+		onclick="
+			getrandomvalueLIPS();
+			setcirclevarfalse();
+			setclickvartrue();"	/>
+
+		<item name="item3" caption="Eyes" 
+		onclick="
+			getrandomvalueEYES();
+			setcirclevarfalse();
+			setclickvartrue();"	/>
+
+		<item name="item4" caption="Face" 
+		onclick="
+			getrandomvalueFACE();
+			setcirclevarfalse();
+			setclickvartrue();"	/>
+
+		<item name="item5" caption="Nails" 
+		onclick="
+			getrandomvalueNAILS();
+			setcirclevarfalse();
+			setclickvartrue();"	/>
+
+		<item name="item6" caption="Tools" 
+		onclick="
+			getrandomvalueTOOLS();
+			setcirclevarfalse();
+			setclickvartrue();"	/>
+
+-->
+
+	</combobox>
+
+<!--  ALEATORIO PARA CUANDO PULSAS MENU INFERIOR  -->
+  <action name="getrandomvalueFACE">
+		mul(val, random, 4);
+		add(val, 1);
+		roundval(val);
+		if(
+			val == 1, FACE1();,
+			val == 2, FACE2();,
+			val == 3, FACE3();,
+			val == 4, FACE4();,
+			val == 5, FACE5();,
+		);
+	</action>
+  <action name="getrandomvalueEYES">
+		mul(val, random, 5);
+		add(val, 1);
+		roundval(val);
+		if(
+			val == 1, EYES1();,
+			val == 2, EYES2();,
+			val == 3, EYES3();,
+			val == 4, EYES4();,
+			val == 5, EYES5();,
+			val == 6, EYES6();,
+		);
+	</action>
+  <action name="getrandomvalueLIPS">
+		mul(val, random, 5);
+		add(val, 1);
+		roundval(val);
+		if(
+			val == 1, LIPS1();,
+			val == 2, LIPS2();,
+			val == 3, LIPS3();,
+			val == 4, LIPS4();,
+			val == 5, LIPS5();,
+			val == 6, LIPS6();,
+		);
+	</action>
+  <action name="getrandomvalueNAILS">
+		mul(val, random, 2);
+		add(val, 1);
+		roundval(val);
+		if(
+			val == 1, NAILS1();,
+			val == 2, NAILS2();,
+		);
+	</action>
+  <action name="getrandomvalueTOOLS">
+		mul(val, random, 1);
+		add(val, 1);
+		roundval(val);
+		if(
+			val == 1, TOOLS1();,
+			val == 2, TOOLS2();,
+		);
+	</action>
+
+<!--  POSICIONES DE CAMARA DE PRODUCTO  -->
+  <action name="FACE1">
+		adjusthlookat(-90);
+		tween(vv.hlookat, -90, 3);
+		tween(vv.vlookat, 53, 3);
+		tween(vv.tx, -228.4, 3);
+		tween(vv.tz, 743.5, 3);
+		tween(vv.fov, 67, 3);
+		</action>
+  <action name="TOOLS1">
+		adjusthlookat(-90);
+		tween(vv.hlookat, -90, 3);
+		tween(vv.vlookat, 49.5, 3);
+		tween(vv.tx, -229, 3);
+		tween(vv.tz, 835, 3);
+		tween(vv.fov, 34, 3);
+        </action>
+  <action name="FACE2">
+		adjusthlookat(-90);
+		tween(vv.hlookat, -90, 3);
+		tween(vv.vlookat, 49, 3);
+		tween(vv.tx, -218, 3);
+		tween(vv.tz, 910, 3);
+		tween(vv.fov, 62, 3);
+        </action>
+  <action name="FACE3">
+		adjusthlookat(-80);
+		tween(vv.hlookat, -80, 3);
+		tween(vv.vlookat, 54.7, 3);
+		tween(vv.tx, -226, 3);
+		tween(vv.tz, 1065, 3);
+		tween(vv.fov, 62, 3);
+        </action>
+
+  <action name="FACE4">
+		adjusthlookat(91);
+		tween(vv.hlookat, 91, 3);
+		tween(vv.vlookat, 45.8, 3);
+		tween(vv.tx, 218, 3);
+		tween(vv.tz, 750, 3);
+		tween(vv.fov, 90, 3);
+		</action>
+  <action name="NAILS1">
+		adjusthlookat(-54);
+		tween(vv.hlookat, -54, 3);
+		tween(vv.vlookat, 41, 3);
+		tween(vv.tx, -151, 3);
+		tween(vv.tz, 1154, 3);
+		tween(vv.fov, 62, 3);
+        </action>
+  <action name="NAILS2">
+		adjusthlookat(52.7);
+		tween(vv.hlookat, 52.7, 3);
+		tween(vv.vlookat, 31, 3);
+		tween(vv.tx, 157, 3);
+		tween(vv.tz, 1142, 3);
+		tween(vv.fov, 62, 3);
+        </action>
+  <!-- EYES3 a EYES8 duotone -->
+  <action name="EYES1">
+		adjusthlookat(79.5);
+		tween(vv.hlookat, 79.5, 3);
+		tween(vv.vlookat, 44, 3);
+		tween(vv.tx, 225, 3);
+		tween(vv.tz, 1065, 3);
+		tween(vv.fov, 62, 3);
+        </action>
+  <!-- EYES4 a EYES6 -->
+  <action name="EYES3">
+		adjusthlookat(91);
+		tween(vv.hlookat, 91, 3);
+		tween(vv.vlookat, 46, 3);
+		tween(vv.tx, 228, 3);
+		tween(vv.tz, 920, 3);
+		tween(vv.fov, 90, 3);
+        </action>
+  <!-- LIPS7 NEW loose pigment -->
+  <action name="EYES2">
+		adjusthlookat(91);
+		tween(vv.hlookat, 91, 3);
+		tween(vv.vlookat, 46, 3);
+		tween(vv.tx, 228, 3);
+		tween(vv.tz, 990, 3);
+		tween(vv.fov, 90, 3);
+        </action>
+  <action name="TOOLS2">
+		adjusthlookat(91);
+		tween(vv.hlookat, 91, 3);
+		tween(vv.vlookat, 46, 3);
+		tween(vv.tx, 227, 3);
+		tween(vv.tz, 837, 3);
+		tween(vv.fov, 90, 3);
+        </action>
+  <action name="EYES1">
+		adjusthlookat(79.5);
+		tween(vv.hlookat, 90, 3);
+		tween(vv.vlookat, 55, 3);
+		tween(vv.tx, 250, 3);
+		tween(vv.tz, 745, 3);
+		tween(vv.fov, 48, 3);
+        </action>
+  <!--MESA CENTRAL -->
+  <action name="LIPS1">
+		adjusthlookat(-60);
+		tween(vv.hlookat, -60, 3);
+		tween(vv.vlookat, 39, 3);
+		tween(vv.tx, 124, 3);
+		tween(vv.tz, 688, 3);
+		tween(vv.fov, 20, 3);
+        </action>
+  <action name="LIPS2">
+		adjusthlookat(0);
+		tween(vv.hlookat, 0, 3);
+		tween(vv.vlookat, 27.5, 3);
+		tween(vv.tx, 0, 3);
+		tween(vv.tz, 550, 3);
+		tween(vv.fov, 20, 3);
+        </action>
+  <action name="LIPS3">
+		adjusthlookat(69);
+		tween(vv.hlookat, 69, 3);
+		tween(vv.vlookat, 40, 3);
+		tween(vv.tx, -135, 3);
+		tween(vv.tz, 698, 3);
+		tween(vv.fov, 20, 3);
+        </action>
+  <!-- DISABLED AREA 
+    <action name="TMP1"    >
+		adjusthlookat(90);
+		tween(vv.hlookat, 90, 3);
+		tween(vv.vlookat, 40, 3);
+		tween(vv.tx, -140, 3);
+		tween(vv.tz, 790, 3);
+		tween(vv.fov, 48, 3);
+        </action> 
+-->
+  <action name="FACE4">
+		adjusthlookat(90);
+		tween(vv.hlookat, 90, 3);
+		tween(vv.vlookat, 61, 3);
+		tween(vv.tx, -95, 3);
+		tween(vv.tz, 882, 3);
+		tween(vv.fov, 65, 3);
+        </action>
+  <action name="EYES5">
+		adjusthlookat(90);
+		tween(vv.hlookat, 90, 3);
+		tween(vv.vlookat, 61, 3);
+		tween(vv.tx, -95, 3);
+		tween(vv.tz, 973, 3);
+		tween(vv.fov, 65, 3);
+        </action>
+  <!--nails3 a lips4 -->
+  <action name="LIPS4">
+		adjusthlookat(180);
+		tween(vv.hlookat, 150, 3);
+		tween(vv.vlookat, 40, 3);
+		tween(vv.tx, -60, 3);
+		tween(vv.tz, 1125, 3);
+		tween(vv.fov, 48, 3);
+        </action>
+  <!--lips5 new -->
+  <action name="LIPS5">
+		adjusthlookat(180);
+		tween(vv.hlookat, 235, 3);
+		tween(vv.vlookat, 50, 3);
+		tween(vv.tx, 130, 3);
+		tween(vv.tz, 1090, 3);
+		tween(vv.fov, 48, 3);
+        </action>
+  <!-- DISABLED area 
+    <action name="TMP2"    >
+		adjusthlookat(90);
+		tween(vv.hlookat, -90, 3);
+		tween(vv.vlookat, 61, 3);
+		tween(vv.tx, 95, 3);
+		tween(vv.tz, 973, 3);
+		tween(vv.fov, 65, 3);
+        </action>
+ -->
+  <action name="EYES6">
+		adjusthlookat(90);
+		tween(vv.hlookat, -90, 3);
+		tween(vv.vlookat, 61, 3);
+		tween(vv.tx, 95, 3);
+		tween(vv.tz, 882, 3);
+		tween(vv.fov, 65, 3);
+        </action>
+  <action name="LIPS6">
+		adjusthlookat(-90);
+		tween(vv.hlookat, -90, 3);
+		tween(vv.vlookat, 40, 3);
+		tween(vv.tx, 140, 3);
+		tween(vv.tz, 790, 3);
+		tween(vv.fov, 48, 3);
+        </action>
+
+<!--  NO SE QUE HACE -->
+  <action name="zoomout">
+    	set(limitedfov, false);
+    	add(destfov, get(vv.fov), 25);
+    	tween(vv.fov, get(destfov), 1.5);
+    	delayedcall(3 , set(limitedfov, true));
+  </action>
+<!--  ESPERA A QUE SE CARGUEN LOS VIDEOS PARA CARGAR EL MODELO -->
+  <events onloadcomplete="loadvideos();" />
+  <scene name="beauty_store" autoload="true">
+    <preview url="bit_000.jpg"/>
+    <image>
+    	<sphere url="bit_000.jpg" />
+      <depthmap url="set_001a.obj" rendermode="3dmodel" scale="1" textured="true" waitforload="true"/>
+    </image>
+    <image>
+    	<sphere devices="android" url="bit_050_4K.jpg" />
+      <depthmap url="set_001a.obj" rendermode="3dmodel" scale="1" textured="true" waitforload="true"/>
+    </image>
+  </scene>
+
+<!--  TEXTO EN PANTALLA PARA PROBAR QUE SE VACIA LA CACHE -->
+  <style name="info" type="text" css="color:#FFFFFF;text-align:center;" bg="false" txtshadow="0 1 4 0x000000 1.0" enabled="false"/>
+  <layer name="exampleinfo" style="info" keep="true" html="data:exampleinfo" align="center" y="-25%" enabled="true" onclick="set(visible,false);"/>
+  <layer name="sourceinfo" style="info" keep="true" html="data:sourceinfo" align="righttop" css="color:#FFFFFF;text-align:right;" enabled="true"/>
+	<data name="exampleinfo">
+		 <a href="http:www.urbansimulations.com" target="_blank" style="color:#FFFFFF;">athleticz 002</a><br/>
+		<br/>
+	</data>
+
+<!--  ACCIONES PARA ACTIVAR LA VISTA AEREA -->
+  <action name="dollhouse_view">
+		lookto(90,30,70,default,true,true);
+		tween(view.oz|view.tx|view.ty|view.tz,calc(''+1200+'|'+image.ox+'|'+image.oy+'|'+900+''));
+		tween(vv.fov, 31);
+	</action>
+  <action name="dollhouse_off">
+		tween(view.oz, 0.0, 2.0);
+	</action>
+  <action name="resetview">
+   	    lookinterrupt();
+		tween(view.tx|view.ty|view.tz|view.ox|view.oy|view.oz|view.fisheye,
+			calc(''+image.ox+'|-160|'+image.oz+'|0|25|0|0'),
+			0.5,
+			default
+		);
+		adjusthlookat(0);   			
+		tween(view.hlookat|view.vlookat, 0);
+		tween(view.fov, 90);
+		tween(view.hlookat, 0);
+		tween(view.vlookat, 0);
+	</action>
+
+<!--  PARAR AUTOTOUR -->
+  <events name="stopautotourcall" onclick="      if(autotourvar == true      ,         oninterrupt(break);         oninterrupt(action(lookinterrupt));      setclickvartrue();   set(autotourvar, false);    ,      );"/>
+<!--   AUTOTOUR comentado para que no se ACTIVE 
+  <events name="onidleautotour" onidle="      resetview();      if(autotourvar == false,    setclickvarfalse();    set(autotourvar, true);       autotour();       );">
+    </events>
+
+  <action name="autotour">
+        oninterrupt(break);
+   	    oninterrupt(action(lookinterrupt));
+		setclickvarfalse();
+    	set(autotourvar, true);
+    	delayedcall(autotoursecuence, 1, end00());
+	</action>
+
+	-->
+  <action name="lookinterrupt">
+  		stoptween(vv.tx);
+  		stoptween(vv.tz);
+  		stoptween(vv.ty);
+  		stoptween(vv.hlookat);
+  		stoptween(vv.vlookat);
+  		stoptween(vv.fov);
+  		set(autotourvar, false);
+  		delayedcall(0.1, setclickvartrue());
+	</action>
+  <action name="end00">
+		tween(vv.hlookat, 0, 16, linear);
+		tween(vv.vlookat, 0, 16, linear);
+		tween(vv.tx, 0, 16,linear);
+		tween(vv.tz, 400, 16,linear);
+		wait(16);
+		start01();
+	</action>
+  <action name="start01">
+		tween(vv.hlookat, -13, 0.01);
+		tween(vv.vlookat, -10, 0.01);
+		<!-- test -->
+		tween(vv.tx, 500, 0.01);
+		tween(vv.tz, 227, 0.01);
+		tween(vv.fov, 66, 0.01);		
+		wait(0.01);
+		end01();
+	</action>
+  <action name="end01">
+		tween(vv.hlookat, -27.5, 3, linear);
+		tween(vv.vlookat, -8, 0.01);
+		tween(vv.tx, -145.5, 3, linear);
+		tween(vv.tz, 236, 3, linear);	
+		wait(3);
+		start02();	
+	</action>
+  <action name="start02">
+		tween(vv.hlookat, 0, 0.01);
+		tween(vv.vlookat, 0, 0.01);
+		tween(vv.tx, 0, 0.01);
+		tween(vv.ty, -160, 0.01);
+		tween(vv.tz, 250, 0.01);
+		tween(vv.fov, 80, 0.01);			
+		wait(0.01);
+		end02();
+	</action>
+  <action name="end02">
+		tween(vv.tz, 350, 5, linear);		
+		wait(5);
+		start03();
+	</action>
+  <action name="start03">
+		tween(vv.hlookat, -35, 0.01);
+		tween(vv.vlookat, 33.5, 0.01);
+		tween(vv.tx, -233.5, 0.01);
+		tween(vv.tz, 648.5, 0.010.01);
+		tween(vv.fov, 50, 0.01);	
+		wait(0.01);
+		mid03();
+	</action>
+  <action name="mid03">
+		tween(vv.tz, 920, 12, linear);
+		wait(12);
+		mid03b();
+	</action>
+  <action name="mid03b">
+		tween(vv.tx, -190, 6, linear);	
+		tween(vv.tz, 1095, 6, linear);
+		wait(6);
+		end03();
+	</action>
+  <action name="end03">
+		tween(vv.tx, -153.5, 5, linear);
+		tween(vv.tz, 1164, 5, linear);
+		wait(5);
+		start04();
+	</action>
+  <action name="start04">
+		tween(vv.hlookat,-90, 0.01);
+		tween(vv.vlookat, 6, 0.01);
+		tween(vv.tx, 250, 0.01);
+		tween(vv.tz, 775, 0.01);
+		tween(vv.fov, 90, 0.01);	
+		wait(0.01);
+		end04();
+	</action>
+  <action name="end04">
+		tween(vv.tz, 985, 8, linear);
+		wait(8);
+		start05();
+	</action>
+  <action name="start05">
+		tween(vv.hlookat, 10, 0.01);
+		tween(vv.vlookat, 19, 0.01);
+		tween(vv.tx, -55, 0.01);
+		tween(vv.tz, 555, 0.01);
+		tween(vv.fov, 27, 0.01);	
+		wait(0.01);
+		end05();
+	</action>
+  <action name="end05">
+		tween(vv.hlookat, -7.5, 8, linear);
+		tween(vv.vlookat, 18.5, 8, linear);
+		tween(vv.tx, 55, 8, linear);
+		wait(8);
+		start06();
+	</action>
+  <action name="start06">
+		tween(vv.hlookat, 1.5, 0.01);
+		tween(vv.vlookat, 28.5, 0.01);
+		tween(vv.tx, -250, 0.01);
+		tween(vv.tz, 1049, 0.01);
+		tween(vv.fov, 21, 0.01);	
+		wait(0.01);
+		end06();
+	</action>
+  <action name="end06">
+		tween(vv.tx, -198, 6, linear);
+		tween(vv.tz, 1112, 6, linear);
+		wait(6);
+		loop00();
+	</action>
+  <action name="loop00">
+		tween(vv.hlookat, 0, 0.01);
+		tween(vv.vlookat, 0, 0.01);
+		tween(vv.tx, -130, 0.01);
+		tween(vv.ty, -160, 0.01);
+		tween(vv.tz, 560, 0.01);
+		tween(vv.fov, 90, 0.01);
+		wait(0.01);
+		step00();
+	</action>
+  <action name="step00">
+		tween(vv.hlookat, 30, 12, linear);
+		tween(vv.tx, -200, 12, linear);
+		tween(vv.tz, 1000, 12, linear);
+		wait(12);
+		step01();
+	</action>
+  <action name="step01">
+		tween(vv.hlookat, 90, 8, linear);
+		tween(vv.tx, 0, 8, linear);
+		tween(vv.tz, 1200, 8, linear);
+		wait(8);
+		step02();
+	</action>
+  <action name="step02">
+		tween(vv.hlookat, 180, 8, linear);
+		tween(vv.tx, 200, 8, linear);
+		tween(vv.tz, 1000, 8, linear);
+		wait(8);
+		step03();
+	</action>
+  <action name="step03">
+		tween(vv.hlookat, 210, 12, linear);
+		tween(vv.tx, 200, 12, linear);
+		tween(vv.tz, 750, 12, linear);
+		wait(12);
+		step04();
+	</action>
+  <action name="step04">
+		tween(vv.hlookat, 280, 8, linear);
+		tween(vv.tx, 80, 8, linear);
+		tween(vv.tz, 550, 8, linear);
+		wait(8);
+		step05();
+	</action>
+  <action name="step05">
+		tween(vv.hlookat, 360, 8, linear);
+		tween(vv.tx, -130, 8, linear);
+		tween(vv.tz, 560, 8, linear);
+		wait(8);
+		loop00();
+	</action>
+  <action name="setautotourvartrue" keep="true" scope="global">
+		set(autotourvar, true);
+	</action>
+  <action name="setautotourvarfalse" keep="true" scope="global" autorun="onstart">
+		set(autotourvar, false);
+	</action>
+
+<!--   INSTRUCCIONES PARA MOBILE DRAG AROUND -->
+  <layer name="walkinfo_touch" keep="true" type="text" align="bottom" y="85" html="Hold down here[br]and drag around[br]for walking" bgalpha="0.3" devices="handheld" css="color:#FFFFFF;text-align:center;" txtshadow="0 1 4 0x000000 1.0" vcenter="true" width="140" height="140" bgroundedge="180" ondown="dragcontrol();"/>
+  <events name="walkinfo_touch" keep="true" devices="mobile" onresize="if(stagewidth GT stageheight,      set(layer[walkinfo_touch], align=rightbottom, x=80, y=40);       ,      set(layer[walkinfo_touch], align=bottom, x=0, y=85);     );     "/>
+ <!--   MOBILE DRAG AROUND -->
+  <action name="dragcontrol" scope="local">
+    	setclickvartrue();
+		copy(mx,mouse.x);
+		copy(my,mouse.y);
+		tween(caller.alpha,0);
+		asyncloop(caller.pressed,
+				if(view.fov LT 80
+				,
+				set(walkaround.slower, 1);
+				calc(walkaround.forward, (mouse.y - my) * -0.25);
+				calc(walkaround.left,    (mouse.x - mx) * -0.25);
+				,
+				set(walkaround.slower, 0);
+				calc(walkaround.forward, (mouse.y - my) * -0.25);
+				calc(walkaround.left,    (mouse.x - mx) * -0.25);
+				);
+				copy(mx, mouse.x);
+				copy(my, mouse.y);
+		  ,
+		  	set(walkaround.slower, 0);
+			set(walkaround.left, 0);
+			set(walkaround.forward, 0);
+			tween(caller.alpha,1);
+		);
+	</action>
+
+  <action name="setcirclevartrue" keep="true" scope="global">
+		set(circletomove, true);
+		set(layer[walkinfo_touch].enabled, true);
+		set(layer[walkinfo_touch].visible, true);
+	</action>
+  <action name="setcirclevarfalse" keep="true" scope="global" autorun="onstart">
+		set(circletomove, false);
+		set(layer[walkinfo_touch].enabled, false);
+		set(layer[walkinfo_touch].visible, false);
+	</action>
+  <events name="walkinfo_touch" keep="true" devices="mobile" onresize="   if(circletomove == true,    if(stagewidth GT stageheight,      set(layer[walkinfo_touch], align=rightbottom, x=80, y=40);      set(layer[moveup], x=20, y=50);      set(layer[movedn], x=20, y=20);       ,      set(layer[walkinfo_touch], align=bottom, x=0, y=85);      set(layer[moveup], x=20, y=90);      set(layer[movedn], x=20, y=60);     ););     "/>
+
+   <!--   CONSOLA -->
+    CONSOLA CONSOLA CONSOLA CONSOLA CONSOLA CONSOLA CONSOLA CONSOLA CONSOLA CONSOLA  
+		A little custom helper tool for finding hotspot- and viewpoint-positions.
+				 add a textfield that shows the current viewing position 
+	
+	<action name="editor_help" scope="local" autorun="onstart">
+		addlayer(auto, l);
+		set(l, keep=true, type=text, align=righttop, x=5, y=5, css='font-family:monospace;');
+		copy(v, global.view);
+		renderloop(
+		calc(l.html,
+		'[u]view1[/u][br]'+
+		'hlookat='+roundval(v.hlookat,1)+'[br]'+
+		'vlookat='+roundval(v.vlookat,1)+'[br]'+
+		'fov='+roundval(v.fov,1)+'[br]'+
+		'tx='+roundval(v.tx,1)+'[br]'+
+		'ty='+roundval(v.ty,1)+'[br]'+
+		'tz='+roundval(v.tz,1)+'[br]'+
+		'');
+		);
+	</action>
+
+
+	
+
+
+</krpano>
